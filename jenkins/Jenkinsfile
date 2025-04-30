@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
-                git branch: 'main' , url: 'https://github.com/lakshay-11/devops-project.git'
+                git branch: 'main', url: 'https://github.com/lakshay-11/devops-project.git'
             }
         }
 
@@ -34,12 +34,12 @@ pipeline {
             }
         }
 
-        stage('Cofigure EC2 instance with Ansible') {
-            steps{
-                dir('ansible'){
-                sh '''
-                ansible playbook -i inventory.ini playbook.yml
-                '''
+        stage('Configure EC2 instance with Ansible') {
+            steps {
+                dir('ansible') {
+                    sh '''
+                    ansible-playbook -i inventory.ini playbook.yml
+                    '''
                 }
             }
         }
