@@ -16,9 +16,9 @@
 
     - name: Pull Docker image from AWS ECR
       shell: |
-        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com
-        docker pull your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 891377155005.dkr.ecr.ap-south-1.amazonaws.com
+        docker pull 891377155005.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
 
     - name: Run the application container
       shell: |
-        docker run -d -p 80:5000 your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+        docker run -d -p 80:5000 891377155005.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest

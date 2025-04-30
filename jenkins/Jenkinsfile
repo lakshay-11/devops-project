@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { 
         AWS_REGION = 'ap-south-1'
-        ECR_REPO = 'your_aws_account_id.dkr.ecr.us-east-1.amazonaws.com/myapp'
+        ECR_REPO = '891377155005.dkr.ecr.us-east-1.amazonaws.com/myapp'
     }
 
     stages {
