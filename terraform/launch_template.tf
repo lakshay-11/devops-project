@@ -4,7 +4,7 @@ resource "aws_launch_template" "app_lt" {
     instance_type = var.instance_type
     key_name = var.key_name
 
-    user_data = base64decode(file("user_data.sh"))
+    user_data = base64encode(file("user_data.sh"))
     vpc_security_group_ids = [ aws_security_group.alb_sg.id ]
 }
 
