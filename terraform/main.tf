@@ -8,7 +8,7 @@ module "vpc" {
 }
 
 resource "aws_security_group" "alb_sg" {
-    name = "alb_sg"
+    name = "alb-sg"
     description = "Allow web traffic"
     vpc_id = module.vpc.vpc_id
 
@@ -28,14 +28,14 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_lb" "app_lb" {
-    name = "app_lb"
+    name = "app-lb"
     load_balancer_type = "application"
     security_groups = [ aws_security_group.alb_sg.id ]
     subnets = module.vpc.public_subnets
 }
 
 resource "aws_lb_target_group" "app_tg" {
-    name = "app_tg"
+    name = "app-tg"
     port = 80
     protocol = "HTTP"
     vpc_id = module.vpc.vpc_id
