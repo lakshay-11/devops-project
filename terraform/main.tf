@@ -2,7 +2,7 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   name = "full-devops-vpc"
   cidr = var.vpc_cidr
-  azs = ["ap-south-1a , ap-south-1b"]
+  azs = ["ap-south-1a" , "ap-south-1b"]
   public_subnets = var.public_subnets
   enable_nat_gateway = false
 }
