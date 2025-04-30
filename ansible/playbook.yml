@@ -4,11 +4,11 @@
   become: true
   tasks:
     - name: Install Docker
-      amazon.aws.package:
+      package:
         name: docker
         state: present
 
-    - name: Start Docker Service
+    - name: Start and Enable Docker Service
       service:
         name: docker
         state: started
@@ -31,6 +31,6 @@
     - name: Run the application container
       shell: |
         docker rm -f myapp || true
-        docker run -d -p 80:5000 891377155005.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+        docker run -d --name myapp -p 80:5000 891377155005.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
       args:
         executable: /bin/bash
