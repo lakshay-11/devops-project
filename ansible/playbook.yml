@@ -1,0 +1,24 @@
+---
+- name: Deploy Application on EC2 Instance
+  hosts: app_servers
+  become: true
+  tasks:
+    - name: Install Docker
+      amazon.aws.package:
+        name: docker
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull Docker image from AWS ECR
+      shell: |
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com
+        docker pull your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+
+    - name: Run the application container
+      shell: |
+        docker run -d -p 80:5000 your-aws-account-id.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest

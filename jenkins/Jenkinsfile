@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    environment { 
+        AWS_REGION = 'ap-south-1'
+        ECR_REPO = 'your_aws_account_id.dkr.ecr.us-east-1.amazonaws.com/myapp'
+    }
+
+    stages {
+        stage('Checkout Source') {
+            steps {
+                git branch: 'main' , url: 'https://github.com/lakshay-11/devops-project.git'
+            }
+        }
+
+        stage('Docker build and push') {
+            steps {
+                sh '''
+                docker build -t myapp ./app
+                aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
+                docker tag myapp:latest $ECR_REPO:latest
+                docker push $ECR_REPO:latest
+                '''
+            }
+        }
+
+        stage('Terraform Deploy Infra') {
+            steps {
+                dir('terraform') {
+                    sh '''
+                    terraform init
+                    terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+
+        stage('Cofigure EC2 instance with Ansible') {
+            steps{
+                dir('ansible'){
+                sh '''
+                ansible playbook -i inventory playbook.yml
+                '''
+                }
+            }
+        }
+    }
+
+    post { 
+        success {
+            echo "Deployment succeeded!"
+        }
+
+        failure {
+            echo "Deployment failed!"
+        }
+    }
+}
