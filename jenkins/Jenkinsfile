@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-       /* stage('Checkout Source') {
+       stage('Checkout Source') {
             steps {
                 git branch: 'main', url: 'https://github.com/lakshay-11/devops-project.git'
             }
@@ -39,16 +39,6 @@ pipeline {
                 dir('ansible') {
                     sh '''
                     ansible-playbook -i inventory.ini playbook.yml
-                    '''
-                }
-            }
-        }*/
-
-        stage('Terraform Deploy Infra') {
-            steps {
-                dir('terraform') {
-                    sh '''
-                    terraform destroy -auto-approve
                     '''
                 }
             }
